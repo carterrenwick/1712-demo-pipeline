@@ -1,0 +1,48 @@
+@charset "ISO-8859-1";
+
+h2.specialFont{
+	font-family: "Bookman Old Style", garamond;
+}
+
+.form-center {
+	max-width: 275px;
+    padding: 15px;
+    margin: 0 auto;
+    border: 3px solid #008CBA;
+    border-radius: 25px;
+    margin-top: 10%;
+}
+
+.div-center {
+	width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.button {
+	padding: 5px;
+	text-align: center;
+	background-color: #7FFFD4;
+	border: 2px solid green;
+	border-radius: 12px;
+	width: 137px;
+	font-family: "Bookman Old Style", garamond;
+	transition-duration: 0.4s;
+}
+
+.buttonHover:hover {
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.inputField {
+	width: 200px;
+	border: 2px solid #008CBA;
+	padding: 5px;
+	font-family: "Bookman Old Style", garamond;
+	margin-bottom: 5px;
+}
+
+body {
+	background-image: url("LightBlueRepeat.jpeg");
+	background-size: cover;
+}
