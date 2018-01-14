@@ -1,5 +1,6 @@
 package com.revature.dao;
 
+import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -37,7 +38,6 @@ public class ErsDao implements ErsDaoContract {
 			ps.setString(1, uName);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
-				System.out.println("FOUND A USER!");
 				u = new User(rs.getInt(1), rs.getString(2), rs.getString(3), 
 						rs.getString(4), rs.getString(5), rs.getString(6),rs.getInt(7));
 			};
@@ -48,32 +48,6 @@ public class ErsDao implements ErsDaoContract {
 	
 	
 	return u;
-	}
-	
-	/*
-	 * Return userid given a username & password
-	 * Returns 0 if username & password do NOT match any record
-	 */
-	@Override
-	public int selectUserId(String uName, String pWord) {
-		int userId = 0;
-		try(Connection conn = DriverManager.getConnection(url, username, password);){
-			String sql = "call check_credentials(?,?,?)";
-		
-			CallableStatement cs = conn.prepareCall(sql);
-			
-			cs.setString(1, uName);
-			cs.setString(2, pWord);
-			cs.registerOutParameter(3, java.sql.Types.NUMERIC);
-			
-			cs.executeUpdate();
-			
-			userId = cs.getInt(3);
-			
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return userId;
 	}
 
 	@Override
@@ -87,9 +61,22 @@ public class ErsDao implements ErsDaoContract {
 			
 			while(rs.next())
 			{
-				reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
-						rs.getBlob(4),rs.getString(5),rs.getString(6),rs.getInt(7),
-						rs.getInt(8),rs.getInt(9),rs.getInt(10)));
+				if(rs.getBlob(4) != null) {
+					Blob imageBlob = rs.getBlob(4);
+                    byte [] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
+                    
+                    reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
+    						imageBytes,rs.getString(5),rs.getString(6),rs.getInt(7),
+    						rs.getInt(8),rs.getInt(9),rs.getInt(10)));
+				} else {
+					reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
+							rs.getString(5),rs.getString(6),rs.getInt(7),
+							rs.getInt(8),rs.getInt(9),rs.getInt(10)));
+				}
+
+//				reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
+//						rs.getBlob(4),rs.getString(5),rs.getString(6),rs.getInt(7),
+//						rs.getInt(8),rs.getInt(9),rs.getInt(10)));
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -109,9 +96,18 @@ public class ErsDao implements ErsDaoContract {
 			
 			while(rs.next())
 			{
-				reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
-						rs.getBlob(4),rs.getString(5),rs.getString(6),rs.getInt(7),
-						rs.getInt(8),rs.getInt(9),rs.getInt(10)));
+				if(rs.getBlob(4) != null) {
+					Blob imageBlob = rs.getBlob(4);
+                    byte [] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
+                    
+                    reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
+    						imageBytes,rs.getString(5),rs.getString(6),rs.getInt(7),
+    						rs.getInt(8),rs.getInt(9),rs.getInt(10)));
+				} else {
+					reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
+							rs.getString(5),rs.getString(6),rs.getInt(7),
+							rs.getInt(8),rs.getInt(9),rs.getInt(10)));
+				}
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -134,9 +130,18 @@ public class ErsDao implements ErsDaoContract {
 			
 			while(rs.next())
 			{
-				reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
-						rs.getBlob(4),rs.getString(5),rs.getString(6),rs.getInt(7),
-						rs.getInt(8),rs.getInt(9),rs.getInt(10)));
+				if(rs.getBlob(4) != null) {
+					Blob imageBlob = rs.getBlob(4);
+                    byte [] imageBytes = imageBlob.getBytes(1, (int) imageBlob.length());
+                    
+                    reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
+    						imageBytes,rs.getString(5),rs.getString(6),rs.getInt(7),
+    						rs.getInt(8),rs.getInt(9),rs.getInt(10)));
+				} else {
+					reqs.add(new Reimbursement(rs.getInt(1),rs.getDouble(2),rs.getString(3),
+							rs.getString(5),rs.getString(6),rs.getInt(7),
+							rs.getInt(8),rs.getInt(9),rs.getInt(10)));
+				}
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -177,6 +182,27 @@ public class ErsDao implements ErsDaoContract {
 			cs.setString(2, r.getDescription());
 			cs.setInt(3, r.getAuthorId());
 			cs.setInt(4, r.getType());
+			
+			cs.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void insertReimbursementWithReceipt(Reimbursement r) {
+		try(Connection conn = DriverManager.getConnection(url, username, password);){
+			String sql = "call insert_reimbursement_with_blob(?,?,?,?,?)";
+		
+			CallableStatement cs = conn.prepareCall(sql);
+			
+			cs.setDouble(1, r.getAmount());
+			cs.setString(2, r.getDescription());
+			cs.setBytes(3, r.getReceipt());
+			cs.setInt(4, r.getAuthorId());
+			cs.setInt(5, r.getType());
 			
 			cs.executeUpdate();
 			
@@ -305,6 +331,45 @@ public class ErsDao implements ErsDaoContract {
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void insertUser(User u) {
+		try(Connection conn = DriverManager.getConnection(url, username, password);){
+			String sql = "call insert_new_emp(?,?,?,?,?)";
+		
+			CallableStatement cs = conn.prepareCall(sql);
+			
+			cs.setString(1, u.getUsername());
+			cs.setString(2, u.getPassword());
+			cs.setString(3, u.getFirstname());
+			cs.setString(4, u.getLastname());
+			cs.setString(5, u.getEmail());
+			
+			cs.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}		
+	}
+
+	@Override
+	public void updateReimbursement(Reimbursement r) {
+		try(Connection conn = DriverManager.getConnection(url, username, password);){
+			String sql = "call update_reimbursement(?,?,?)";
+		
+			CallableStatement cs = conn.prepareCall(sql);
+			
+			cs.setInt(1, r.getId());
+			cs.setInt(2, r.getResolverId());
+			cs.setInt(3, r.getStatus());
+			
+			cs.executeUpdate();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}	
+		
 	}
 	
 }

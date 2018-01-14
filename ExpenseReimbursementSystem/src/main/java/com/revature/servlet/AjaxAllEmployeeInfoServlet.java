@@ -24,8 +24,6 @@ public class AjaxAllEmployeeInfoServlet extends HttpServlet {
 		System.out.println("AjaxAllEmployeeInfoServlet -GET");
 		List<User> emps = new ErsService().getAllEmployees();
 		
-		System.out.println(emps);
-		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(emps);
 		

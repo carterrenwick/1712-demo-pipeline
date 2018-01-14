@@ -35,8 +35,6 @@ public class LoginServlet extends HttpServlet {
 		
 		clientUser = new ErsService().validateUser(clientUser);
 		
-		
-		System.out.println("The user enter: " + username + " & " + password);
 		if(clientUser != null){
 			
 			HttpSession session = req.getSession(); 

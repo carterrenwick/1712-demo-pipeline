@@ -41,10 +41,8 @@ public class AjaxUpdateInfoServlet extends HttpServlet {
 			
 		User u = jackson.readValue(((String)obj), User.class);
 		
-		System.out.println(u);
-		
 		HttpSession session = req.getSession();
-		//get session user's id and set to User u for update
+		//get session user's id/role and set to User u for update
 		u.setId(((User) session.getAttribute("user")).getId()); 
 		u.setRole(((User) session.getAttribute("user")).getRole());
 		

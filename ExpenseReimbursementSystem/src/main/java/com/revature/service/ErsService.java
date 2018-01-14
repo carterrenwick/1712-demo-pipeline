@@ -52,8 +52,28 @@ public class ErsService implements ErsServiceContract {
 	}
 	
 	@Override
+	public int registerEmployee(User ersUser) {
+		List<String> uNames = ersDAO.selectAllUsernames();
+		List<String> emails = ersDAO.selectAllEmails();
+		
+		for(String u: uNames)
+			if(u.compareTo(ersUser.getUsername()) == 0)
+				return 0;
+		
+		for(String e: emails)
+			if(e.compareTo(ersUser.getEmail()) == 0)
+				return 0;
+		
+		ersDAO.insertUser(ersUser);
+		return 1;
+	}
+	
+	@Override
 	public void submitReimbursement(Reimbursement r) {
-		ersDAO.insertReimbursement(r);
+		if(r.getReceipt() != null)
+			ersDAO.insertReimbursementWithReceipt(r);
+		else
+			ersDAO.insertReimbursement(r);
 	}
 
 	@Override
@@ -74,6 +94,12 @@ public class ErsService implements ErsServiceContract {
 	@Override
 	public List<Reimbursement> getAllResolvedRequests() {
 		return ersDAO.selectAllResolvedRequests();
+	}
+
+	@Override
+	public void resolveReimbursement(Reimbursement r) {
+		ersDAO.updateReimbursement(r);
+		
 	}
 
 }

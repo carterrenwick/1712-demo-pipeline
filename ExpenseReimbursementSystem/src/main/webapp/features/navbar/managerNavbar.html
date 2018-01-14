@@ -1,31 +1,35 @@
 <!DOCTYPE html>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#00b386;">
-  <a class="navbar-brand" >ERS</a>
+  <a class="navbar-brand" >
+  	<img src="resources/img/ccLogo.png" width="40" height="35" alt="">
+  	Coding Club
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active pl-3">
-        <a class="nav-link" id="dashboard" style=cursor:pointer>Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item pl-3">
+        <a class="nav-link" id="dashboard" style=cursor:pointer>Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item dropdown pl-3">
         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style=cursor:pointer>
           Actions
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" id="adr" style=cursor:pointer>Approve/Deny Requests</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" id="vAE" style=cursor:pointer>View All Employees</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" id="vAPRR" style=cursor:pointer>View All Pending Requests</a>
+          <a class="dropdown-item" id="vAPRR" style=cursor:pointer>Approve/Deny Pending Requests</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" id=vARRR style=cursor:pointer>View All Resolved Requests</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" id="vAE" style=cursor:pointer>View All Employees</a>
         </div>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
+    	<li class="nav-item pr-5">
+       		<a class="nav-link" id="register" style=cursor:pointer>Register New Employee</a>
+      	</li>
     	<li class="nav-item">
        		<a class="nav-link" href="logout">Logout</a>
       	</li>

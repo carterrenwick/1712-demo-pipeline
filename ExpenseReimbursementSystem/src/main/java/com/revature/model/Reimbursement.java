@@ -1,13 +1,11 @@
 package com.revature.model;
 
-import java.sql.Blob;
-
 public class Reimbursement {
 
 	private int id;
 	private double amount;
 	private String description;
-	private Blob receipt;
+	private byte[] receipt;
 	private String dateSubmitted;
 	private String dateResolved;
 	private int authorId;
@@ -35,7 +33,7 @@ public class Reimbursement {
 
 	
 	
-	public Reimbursement(int id, double amount, String description, Blob receipt, String dateSubmitted,
+	public Reimbursement(int id, double amount, String description, byte[] receipt, String dateSubmitted,
 			String dateResolved, int authorId, int resolverId, int type, int status) {
 		super();
 		this.id = id;
@@ -74,11 +72,11 @@ public class Reimbursement {
 		this.description = description;
 	}
 
-	public Blob getReceipt() {
+	public byte[] getReceipt() {
 		return receipt;
 	}
 
-	public void setReceipt(Blob receipt) {
+	public void setReceipt(byte[] receipt) {
 		this.receipt = receipt;
 	}
 

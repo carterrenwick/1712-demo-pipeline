@@ -15,6 +15,9 @@ public interface ErsServiceContract {
 	public List<User> getAllEmployees();
 	
 	public void submitReimbursement(Reimbursement r);
+	public int registerEmployee(User ersUser);
 	
 	public int updateUser(User ersUser);
+	public void resolveReimbursement(Reimbursement r);
+	
 }
