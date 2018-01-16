@@ -315,7 +315,7 @@ public class ErsDao implements ErsDaoContract {
 	@Override
 	public void updateUserIgnoreEmail(User u) {
 		try(Connection conn = DriverManager.getConnection(url, username, password);){
-			String sql = "call update_user_ignore_uname(?,?,?,?,?)";
+			String sql = "call update_user_ignore_email(?,?,?,?,?)";
 		
 			CallableStatement cs = conn.prepareCall(sql);
 			

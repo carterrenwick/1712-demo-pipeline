@@ -620,7 +620,6 @@ function processRegisterEmp(){
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200){
-			console.log('outcome: '+ xhr.responseText);
 			if(xhr.responseText == "success")
 				window.alert("Successfully registered new employee!");
 			else
@@ -657,7 +656,6 @@ function processUpdateInfo(){
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200){
-			console.log('outcome: '+ xhr.responseText);
 			if(xhr.responseText == "success")
 				window.alert("User information successfully updated!");
 			else
